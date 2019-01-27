@@ -35,12 +35,22 @@ export default class SearchBar extends Component {
       <div className="search-bar container-fluid">
         <div className="container">
           <div className="row">
-            <div className="search-bar__logo col-xs-12 col-sm-2">
-              <Link to="/" />
-            </div>
-            <div className="search-bar__input col-xs-12 col-sm-8">
-              <input type="text" value={search} onChange={e => this.handleChange(e)} onKeyPress={e => this.handleKeyPress(e)} />
-              <SearchButton search={search} />
+            <div className="col-xs-12 col-sm-10 col-sm-offset-1">
+              <div className="row">
+                <div className="search-bar__logo col-xs-12 col-sm-1">
+                  <Link to="/" />
+                </div>
+                <div className="search-bar__input col-xs-12 col-sm-11">
+                  <input
+                    type="text"
+                    value={search}
+                    placeholder="Nunca dejes de buscar"
+                    onChange={e => this.handleChange(e)}
+                    onKeyPress={e => this.handleKeyPress(e)}
+                  />
+                  <SearchButton search={search} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
