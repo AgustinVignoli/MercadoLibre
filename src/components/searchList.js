@@ -59,7 +59,7 @@ class SearchList extends Component {
             <div className="col-xs-12 col-sm-10 col-sm-offset-1 search-results">
               {!isLoaded && 'Cargando...'}
               {results && isLoaded && <SearchResultsList results={results} />}
-              {!results && 'No hay resultados'}
+              {!results && isLoaded && 'No hay resultados'}
             </div>
           </div>
         </div>

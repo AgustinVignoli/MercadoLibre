@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { mapCurrencyId } from '../model/mappers/currencyIdMapper';
+import { mapCurrencyId } from '../model/mappers/commonMappers';
 
 function SearchResultsList({ results }) {
   return (
