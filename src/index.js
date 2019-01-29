@@ -7,6 +7,7 @@ import configureStore, { history } from './reducers/configureStore';
 import SearchBar from './components/searchBar';
 import SearchList from './components/searchList';
 import ItemDetail from './components/itemDetail';
+import './styles/styles.scss';
 
 const store = configureStore();
 
