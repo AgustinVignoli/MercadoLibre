@@ -2,9 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import ContentZoom from 'react-content-zoom';
 import { loadSearchProductDetail } from '../actions/searchActions';
 import SearchBar from './searchBar';
 import { mapCurrencyId, mapProductCondition } from '../model/mappers/commonMappers';
+import { formatProductPrice } from '../model/formatters/priceFormatter';
 
 class ItemDetail extends Component {
   componentDidMount() {
@@ -25,6 +27,7 @@ class ItemDetail extends Component {
     } = productDetail || {};
     const { plain_text: description } = productDescription || {};
     const showDetail = isLoaded && productDetail && productDescription;
+    const mainImage = pictures && pictures[0].secure_url;
 
     return (
       <Fragment>
@@ -35,7 +38,7 @@ class ItemDetail extends Component {
               {showDetail && (
                 <div className="row">
                   <div className="col-xs-12 col-sm-8 product-detail__picture">
-                    <img src={pictures[0].secure_url} alt={title} />
+                    <ContentZoom zoomPercent={200} largeImageUrl={mainImage} imageUrl={mainImage} contentHeight={500} contentWidth={500} />
                     <div className="product-detail__description">
                       <h2>Descripci&oacute;n del producto</h2>
                       <p>{description}</p>
@@ -44,11 +47,11 @@ class ItemDetail extends Component {
                   <div className="col-xs-12 col-sm-4">
                     <p className="product-detail__data">
                       {mapProductCondition(condition)}
-                      {Boolean(soldQuantity) && ` - ${soldQuantity}`}
+                      {Boolean(soldQuantity) && ` - ${soldQuantity} vendidos`}
                     </p>
                     <h4 className="product-detail__title">{title}</h4>
                     <h2 className="product-detail__price">
-                      {mapCurrencyId(currency)} {price}
+                      {mapCurrencyId(currency)} {formatProductPrice(price)}
                     </h2>
                     <button type="button" className="btn-comprar">
                       Comprar
@@ -59,7 +62,7 @@ class ItemDetail extends Component {
               {!showDetail && 'Cargando...'}
             </div>
           </div>
-        </div>)
+        </div>
       </Fragment>
     );
   }

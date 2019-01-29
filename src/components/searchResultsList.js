@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { mapCurrencyId } from '../model/mappers/commonMappers';
+import { formatProductPrice } from '../model/formatters/priceFormatter';
 
 function SearchResultsList({ results }) {
   return (
@@ -18,7 +19,7 @@ function SearchResultsList({ results }) {
           <div className="product-info">
             <p className="product-info__price">
               <span>
-                {mapCurrencyId(currencyId)} {price}
+                {mapCurrencyId(currencyId)} {formatProductPrice(price)}
                 {shipping.free_shipping && <img src="/img/ic_shipping.png" className="free-shipping" alt="Free shipping" title="Free shipping" />}
               </span>
               <span className="product-info__address">{address.state_name}</span>
