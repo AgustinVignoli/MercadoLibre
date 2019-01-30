@@ -17,6 +17,7 @@ ReactDOM.render(
       <Fragment>
         <Switch>
           <Route exact path="/" component={SearchBar} />
+          <Route path="/items/category" component={SearchList} />
           <Route path="/items/:id" component={ItemDetail} />
           <Route path="/items" component={SearchList} />
         </Switch>

@@ -1,36 +1,42 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { mapCurrencyId } from '../model/mappers/commonMappers';
-import { formatProductPrice } from '../model/formatters/priceFormatter';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ListProductInfo from './listProductInfo';
+import ProductListThumbnail from './productListThumbnail';
 
 function SearchResultsList({ results }) {
+  const items = results.map(({
+    thumbnail, title, price, currency_id: currencyId, address, id, shipping,
+  }) => (
+    <article className="product" key={`product-${id}`}>
+      <figure className="product__image">
+        <ProductListThumbnail props={{ id, title, thumbnail }} />
+      </figure>
+      <div className="product-info">
+        <ListProductInfo
+          props={{
+            title,
+            price,
+            currencyId,
+            address,
+            id,
+            shipping,
+          }}
+        />
+      </div>
+    </article>
+  ));
+
   return (
-    <Fragment>
-      {results.map(({
-        thumbnail, title, price, currency_id: currencyId, address, id, shipping,
-      }) => (
-        <div className="product" key={`product-${id}`}>
-          <div className="product__image">
-            <Link to={`/items/${id}`} tile={title}>
-              <img src={thumbnail} alt={title} width="180px" height="180px" />
-            </Link>
-          </div>
-          <div className="product-info">
-            <p className="product-info__price">
-              <span>
-                {mapCurrencyId(currencyId)} {formatProductPrice(price)}
-                {shipping.free_shipping && <img src="/img/ic_shipping.png" className="free-shipping" alt="Free shipping" title="Free shipping" />}
-              </span>
-              <span className="product-info__address">{address.state_name}</span>
-            </p>
-            <p className="product-info__title">
-              <Link to={`/items/${id}`}>{title}</Link>
-            </p>
-          </div>
-        </div>
-      ))}
-    </Fragment>
+    <ReactCSSTransitionGroup
+      transitionName="animation"
+      transitionAppear
+      transitionAppearTimeout={500}
+      transitionEnter={false}
+      transitionLeave={false}
+    >
+      {items}
+    </ReactCSSTransitionGroup>
   );
 }
 

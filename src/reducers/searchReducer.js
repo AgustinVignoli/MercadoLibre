@@ -17,11 +17,12 @@ const searchReducer = handleActions(
       };
     },
     [LOAD_RESULTS_FULFILLED]: (state, action) => {
-      const { payload: { data: { results } } } = action;
+      const { payload: { data: { results, filters } } } = action;
 
       return {
         ...state,
         searchResults: results.slice(0, 4),
+        filters,
         isLoaded: true,
       };
     },

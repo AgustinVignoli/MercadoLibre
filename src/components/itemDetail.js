@@ -32,19 +32,25 @@ class ItemDetail extends Component {
     return (
       <Fragment>
         <SearchBar {...this.props} />
-        <div className="container">
+        <section className="container">
           <div className="row">
             <div className="col-xs-12 col-sm-10 col-sm-offset-1 product-detail">
               {showDetail && (
                 <div className="row">
-                  <div className="col-xs-12 col-sm-8 product-detail__picture">
-                    <ContentZoom zoomPercent={200} largeImageUrl={mainImage} imageUrl={mainImage} contentHeight={500} contentWidth={500} />
-                    <div className="product-detail__description">
+                  <aside className="col-xs-12 col-sm-8 product-detail__picture">
+                    <ContentZoom
+                      zoomPercent={200}
+                      largeImageUrl={mainImage}
+                      imageUrl={mainImage}
+                      contentHeight={500}
+                      contentWidth={500}
+                    />
+                    <article className="product-detail__description">
                       <h2>Descripci&oacute;n del producto</h2>
                       <p>{description}</p>
-                    </div>
-                  </div>
-                  <div className="col-xs-12 col-sm-4">
+                    </article>
+                  </aside>
+                  <aside className="col-xs-12 col-sm-4">
                     <p className="product-detail__data">
                       {mapProductCondition(condition)}
                       {Boolean(soldQuantity) && ` - ${soldQuantity} vendidos`}
@@ -56,13 +62,13 @@ class ItemDetail extends Component {
                     <button type="button" className="btn-comprar">
                       Comprar
                     </button>
-                  </div>
+                  </aside>
                 </div>
               )}
               {!showDetail && 'Cargando...'}
             </div>
           </div>
-        </div>
+        </section>
       </Fragment>
     );
   }

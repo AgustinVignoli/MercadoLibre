@@ -6,55 +6,42 @@ import { isEmpty } from 'lodash';
 import { loadSearchResults } from '../actions/searchActions';
 import SearchBar from './searchBar';
 import SearchResultsList from './searchResultsList';
+import BreadCrumbs from './breadCrumbs';
 
 class SearchList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { results: null };
-  }
-
   componentDidMount() {
     const {
-      location: { search: query },
+      location: { search: query, pathname },
       onLoadSearchResults,
     } = this.props;
     const { search } = queryString.parse(query);
 
     if (!isEmpty(search)) {
-      onLoadSearchResults(search);
+      onLoadSearchResults(search, pathname);
     }
   }
 
   componentDidUpdate(prevProps) {
+    const { location: { search: prevQuery } } = prevProps;
     const {
-      location: { search: prevQuery },
-      searchResults: prevSearchResults,
-    } = prevProps;
-    const {
-      location: { search: query },
+      location: { search: query, pathname },
       onLoadSearchResults,
-      searchResults,
     } = this.props;
     const { search } = queryString.parse(query);
 
     if (query !== prevQuery && !isEmpty(search)) {
-      onLoadSearchResults(search);
-    }
-
-    if (searchResults !== prevSearchResults) {
-      this.setState({ results: searchResults });
+      onLoadSearchResults(search, pathname);
     }
   }
 
   render() {
-    const { results } = this.state;
-    const { isLoaded } = this.props;
+    const { isLoaded, searchResults: results, filters } = this.props;
 
     return (
       <Fragment>
         <SearchBar {...this.props} />
-        <div className="container">
+        {isLoaded && <BreadCrumbs filters={filters} />}
+        <section className="container">
           <div className="row">
             <div className="col-xs-12 col-sm-10 col-sm-offset-1 search-results">
               {!isLoaded && 'Cargando...'}
@@ -62,7 +49,7 @@ class SearchList extends Component {
               {!results && isLoaded && 'No hay resultados'}
             </div>
           </div>
-        </div>
+        </section>
       </Fragment>
     );
   }
@@ -74,18 +61,19 @@ SearchList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { searchReducer: { searchResults, isLoaded, errors } } = state;
+  const { searchReducer: { searchResults, filters, isLoaded, errors } } = state;
 
   return {
     searchResults: !isEmpty(searchResults) ? searchResults : null,
+    filters: filters || [],
     isLoaded: isLoaded || false,
     errors,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLoadSearchResults(search) {
-    dispatch(loadSearchResults(search));
+  onLoadSearchResults(search, pathname) {
+    dispatch(loadSearchResults(search, pathname));
   },
 });
 

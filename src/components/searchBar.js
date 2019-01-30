@@ -32,14 +32,14 @@ export default class SearchBar extends Component {
     const { search } = this.state;
 
     return (
-      <div className="search-bar container-fluid">
+      <header className="search-bar container-fluid">
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-sm-10 col-sm-offset-1">
               <div className="row">
-                <div className="search-bar__logo col-xs-12 col-sm-1">
+                <nav className="search-bar__logo col-xs-12 col-sm-1">
                   <Link to="/" />
-                </div>
+                </nav>
                 <div className="search-bar__input col-xs-12 col-sm-11">
                   <input
                     type="text"
@@ -54,7 +54,7 @@ export default class SearchBar extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </header>
     );
   }
 }

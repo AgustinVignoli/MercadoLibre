@@ -12,9 +12,9 @@ export const {
   loadProductDescription,
 } = createActions(LOAD_PRODUCT_DETAIL, LOAD_RESULTS, LOAD_PRODUCT_DESCRIPTION);
 
-export function loadSearchResults(search) {
+export function loadSearchResults(search, pathname) {
   return dispatch => (
-    dispatch(loadResults({ promise: loadResultsSvc(search) }))
+    dispatch(loadResults({ promise: loadResultsSvc(search, pathname) }))
   );
 }
 
