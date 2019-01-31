@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import queryString from 'query-string';
 import SearchButton from './searchButton';
@@ -28,8 +27,15 @@ export default class SearchBar extends Component {
     }
   };
 
+  handleClick = (history, search) => {
+    if (!isEmpty(search)) {
+      history.push(`/items?search=${search}`);
+    }
+  };
+
   render() {
     const { search } = this.state;
+    const { history } = this.props;
 
     return (
       <header className="search-bar container-fluid">
@@ -38,7 +44,7 @@ export default class SearchBar extends Component {
             <div className="col-xs-12 col-sm-10 col-sm-offset-1">
               <div className="row">
                 <nav className="search-bar__logo col-xs-12 col-sm-1">
-                  <Link to="/" />
+                  <a href="/">{'&bsp;'}</a>
                 </nav>
                 <div className="search-bar__input col-xs-12 col-sm-11">
                   <input
@@ -48,7 +54,7 @@ export default class SearchBar extends Component {
                     onChange={e => this.handleChange(e)}
                     onKeyPress={e => this.handleKeyPress(e)}
                   />
-                  <SearchButton search={search} />
+                  <SearchButton search={search} history={history} handleClick={this.handleClick} />
                 </div>
               </div>
             </div>
